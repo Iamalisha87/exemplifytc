@@ -5,17 +5,17 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Set up OpenAI API key
-openai.api_key = 'your-openai-api-key'
+openai.api_key = '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'
 
-# Load CSV data
-@st.cache
+# Load CSV data using the new caching method
+@st.cache_data
 def load_data():
     df = pd.read_csv('exam_issues.csv')  # Make sure your CSV file is in this format
     return df
 
 # Function to find the most similar question from the CSV
 def find_similar_question(user_input, df):
-    questions = df['issue'].tolist()
+    questions = df['issues'].tolist()
 
     # Use TF-IDF to find the closest question
     vectorizer = TfidfVectorizer().fit_transform([user_input] + questions)
@@ -26,7 +26,7 @@ def find_similar_question(user_input, df):
     
     # Get the index of the most similar question
     similar_idx = cosine_sim.argsort()[0][-1]
-    return df.iloc[similar_idx]['solution']
+    return df.iloc[similar_idx]['solutions']
 
 # Function to get a fallback response from OpenAI
 def get_openai_response(user_input):
@@ -42,7 +42,7 @@ def get_openai_response(user_input):
     return response.choices[0].message.content.strip()
 
 # Streamlit app UI
-st.title("Exemplify Exam Support Bot")
+st.title("Examplify.AI")
 
 st.write("Facing issues during your exam? Enter your problem and get an instant solution.")
 
