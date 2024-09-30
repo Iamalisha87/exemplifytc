@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # Set up OpenAI API key
-openai.api_key = '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'
+openai.api_key = 'Api key'
 
 # Load CSV data using the new caching method
 @st.cache_data
